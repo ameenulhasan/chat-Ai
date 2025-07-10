@@ -5,17 +5,21 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
 
 @Setter
 @Getter
 public class PaginationRequest {
+
     private int pageNo ;
     private int pageSize ;
     private Map<String, String> filters;
     private boolean hasFilters;
-    private String searchField;
-    private String searchValue;
     private boolean hasSearch;
     private String sortField;
     private String sortValue;

@@ -2,7 +2,6 @@ package com.ameen.chat_ai.util;
 
 import com.ameen.chat_ai.constants.Constant;
 import com.ameen.chat_ai.response.ApiResponse;
-import com.ameen.chat_ai.response.PageResponse;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Validation;
@@ -40,31 +39,9 @@ public class CommonUtil {
         return new ApiResponse(status, message, data);
     }
 
-    public static <T> ApiResponse getApiResponse(int status, String message, Page<T> page) {
-        ApiResponse apiResponse = new ApiResponse(status, message, page.getContent());
-        apiResponse.setHasNext(page.hasNext());
-        apiResponse.setHasPrevious(page.hasPrevious());
-        apiResponse.setTotalRecordCount(page.getTotalElements());
-        apiResponse.setTotalPageCount(page.getTotalPages());
-        return apiResponse;
-    }
-
-    public static ResponseEntity<ApiResponse> getApiResponsePage(PageResponse<?> pageResponse) {
-        ApiResponse apiResponse = new ApiResponse(
-                200,
-                Constant.SUCCESS,
-                pageResponse.getData(),
-                pageResponse.getTotalRecordCount(),
-                pageResponse.isHasNext(),
-                pageResponse.isHasPrevious()
-        );
-        return ResponseEntity.ok(apiResponse);
-    }
-
     public static <T> ResponseEntity<ApiResponse> createPageResponse(Page<T> page) {
         return ResponseEntity.status(HttpStatus.OK).body(CommonUtil.getApiResponsePage(HttpStatus.OK.value(), Constant.SUCCESS, page));
     }
-
     public static <T> ApiResponse getApiResponsePage(int status, String message, Page<T> page) {
         ApiResponse apiResponse = new ApiResponse(status, message, page.getContent());
         apiResponse.setHasNext(page.hasNext());
@@ -111,4 +88,5 @@ public class CommonUtil {
             }
         }
     }
+
 }

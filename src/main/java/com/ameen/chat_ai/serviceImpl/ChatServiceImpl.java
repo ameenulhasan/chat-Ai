@@ -4,7 +4,6 @@ import com.ameen.chat_ai.constants.Constant;
 import com.ameen.chat_ai.dto.ChatResponseDto;
 import com.ameen.chat_ai.model.Chat;
 import com.ameen.chat_ai.repository.ChatRepository;
-import com.ameen.chat_ai.repository.UserRepository;
 import com.ameen.chat_ai.response.ApiResponse;
 import com.ameen.chat_ai.response.UserContextHolder;
 import com.ameen.chat_ai.service.ChatService;
@@ -21,13 +20,11 @@ import java.util.concurrent.ExecutorService;
 public class ChatServiceImpl implements ChatService {
 
     private final ChatRepository chatRepository;
-    private final UserRepository userRepository;
     private final DialogflowService dialogflowService;
-    private final ExecutorService executorService;  // Background Thread Pool
+    private final ExecutorService executorService;
 
-    public ChatServiceImpl(ChatRepository chatRepository, UserRepository userRepository, DialogflowService dialogflowService, ExecutorService executorService) {
+    public ChatServiceImpl(ChatRepository chatRepository, DialogflowService dialogflowService, ExecutorService executorService) {
         this.chatRepository = chatRepository;
-        this.userRepository = userRepository;
         this.dialogflowService = dialogflowService;
         this.executorService = executorService;
     }
@@ -50,7 +47,7 @@ public class ChatServiceImpl implements ChatService {
     }
     private void autoReplyAi(Chat chat) {
         try {
-            String aiResponse = dialogflowService.getDialogflowReply(chat.getUserMessage());
+            String aiResponse = dialogflowService.getAIResponse(chat.getUserMessage());
             chat.setReplyAiMessage(aiResponse);
             chat.setStatus(Chat.ChatStatus.DELIVERED);
             chatRepository.save(chat);  // Update AI Reply in DB
