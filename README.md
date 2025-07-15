@@ -31,7 +31,9 @@ export OPENAI_API_KEY=your-secret-key
     2.Start MySQL locally (or configure URI)
     3.Run the application:
         ./mvnw spring-boot:run
-    4.Test API using Postman or any REST client
+    4.Test API using Postman, Swagger UI, or any REST client
 
 📫 Contact
 Maintained by Ameenul Hasan – feel free to reach out for collaboration or feedback.
+
+---
